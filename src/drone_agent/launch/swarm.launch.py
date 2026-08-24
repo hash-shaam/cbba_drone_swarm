@@ -4,12 +4,13 @@ from launch_ros.actions import Node
 
 def generate_launch_description():
 
+    # Shared flock goal -- the "migratory urge". Same for all three drones.
+    GOAL_X, GOAL_Y = 12.0, 2.0
+
     drones = [
-        # drone1 and drone2 are head-on -- guaranteed to force avoidance
-        {"id": "drone1", "x": 0.0, "y": 0.0,  "tx": 10.0, "ty": 0.0},
-        {"id": "drone2", "x": 10.0, "y": 0.0, "tx": 0.0,  "ty": 0.0},
-        # drone3 crosses perpendicular through the middle
-        {"id": "drone3", "x": 5.0, "y": 6.0,  "tx": 5.0,  "ty": -6.0},
+        {"id": "drone1", "x": 0.0, "y": 0.0},
+        {"id": "drone2", "x": 1.8, "y": 1.2},
+        {"id": "drone3", "x": 1.8, "y": -1.2},
     ]
 
     nodes = []
@@ -23,8 +24,8 @@ def generate_launch_description():
                     "drone_id": d["id"],
                     "start_x": d["x"],
                     "start_y": d["y"],
-                    "target_x": d["tx"],
-                    "target_y": d["ty"],
+                    "goal_x": GOAL_X,
+                    "goal_y": GOAL_Y,
                 }]
             )
         )
